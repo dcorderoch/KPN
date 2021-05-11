@@ -4,7 +4,9 @@ this program simulates factorial through a KPN, see diagramaKPN.pdf
 md5sum                            filename
 f49200b962b289bb4c93f443f130d552  diagramaKPN.pdf
 
-though instead of a "normal" factorial, which stops at 1, a
+though instead of a "normal" factorial, which stops at 1, this will start with 1, calculate its factorial
+and add its increment (1 + 1), and calculate its factorial, then repeat the increment and so on, stopping
+only when the operative system stops it due to lack of memory or cpu capacity
 """
 
 from queue import Queue
