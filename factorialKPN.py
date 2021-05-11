@@ -1,10 +1,28 @@
+"""
+this program simulates factorial through a KPN, see diagramaKPN.pdf
+
+md5sum                            filename
+f49200b962b289bb4c93f443f130d552  diagramaKPN.pdf
+
+though instead of a "normal" factorial, which stops at 1, a
+"""
+
 from queue import Queue
 from threading import Thread
 from time import sleep
 
 # Señales
+an = Queue()
+bn = Queue()
+cn = Queue()
+dn = Queue()
+en = Queue()
+fn = Queue()
+gn = Queue()
+hn = Queue()
 
 
+# DELAYS
 def delay1():
     cn.put(1)
     while True:
@@ -33,9 +51,6 @@ def split2():
         an.put(a)
         fn.put(a)
 
-
-# SEPARACIONES-*---
-
 # SUMA
 def add():
     a = 0
@@ -59,15 +74,8 @@ def mul():
         cn.put(c)
 
 
+# allow this file to be imported as a module from another file
 if __name__ == "__main__":
-    an = Queue()
-    bn = Queue()
-    cn = Queue()
-    dn = Queue()
-    en = Queue()
-    fn = Queue()
-    gn = Queue()
-    hn = Queue()
 
     Delay1 = Thread(target=delay1).start()
     Delay2 = Thread(target=delay2).start()
@@ -79,4 +87,4 @@ if __name__ == "__main__":
 
     while True:
         print(str(en.get()))
-        sleep(0.1)
+        sleep(1)
