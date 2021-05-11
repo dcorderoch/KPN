@@ -5,12 +5,14 @@ an attempt to make Kahn Process networks
 from threading import Thread
 from queue import Queue
 
-import time # to simulate blocking
+import time  # to simulate blocking
+
 
 class KahnThread(Thread):
     """
     class to simulate a node, it runs the node (lambda function) that is passed to it
     """
+
     def __init__(self, fn):
         """
         class initialization dunder method
@@ -53,6 +55,7 @@ class KahnThread(Thread):
             elif len(self.out_queues):
                 self.out_queues[0].put(results)
 
+
 def connect(*connections):
     """
     make the producer-consumer connection between two blocks
@@ -76,16 +79,22 @@ def printer(filename):
     """
     generate a function that will print to stdouot, and append to filename
     """
-    return lambda content: (print(content), open(filename, 'a').write(str(content) + '\n'))
+    return lambda content: (
+        print(content),
+        open(filename, "a").write(str(content) + "\n"),
+    )
+
 
 # generate the initial value to pass to factorial
-seed = int(input('Number: '))
+seed = int(input("Number: "))
+
 
 def update_seed(x):
     seed = x
 
+
 # run if this is the program called, but not if it's imported from another
-if __name__ == '__main__':
+if __name__ == "__main__":
     # "generate" seed
     b = lambda: seed
     # generate a function that calcultes the factorial
@@ -93,4 +102,9 @@ if __name__ == '__main__':
     # generate a function that returns an argument to itself
     fact = lambda x: x
 
-    connect((b, fact), (fact, fact_aux), (fact_aux, printer('test.txt')), (fact_aux, lambda x: update_seed(x)))
+    connect(
+        (b, fact),
+        (fact, fact_aux),
+        (fact_aux, printer("test.txt")),
+        (fact_aux, lambda x: update_seed(x)),
+    )

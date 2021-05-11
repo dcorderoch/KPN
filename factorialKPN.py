@@ -1,85 +1,82 @@
-import queue
-import threading
-import time
+from queue import Queue
+from threading import Thread
+from time import sleep
 
-
-#Señales
-an = queue.Queue()
-bn = queue.Queue()
-cn = queue.Queue()
-dn = queue.Queue()
-en = queue.Queue()
-fn = queue.Queue()
-gn = queue.Queue()
-hn = queue.Queue()
-
-
+# Señales
 
 
 def delay1():
-  cn.put(1)
-  while True:
-    a = cn.get()
-    dn.put(a)
+    cn.put(1)
+    while True:
+        a = cn.get()
+        dn.put(a)
+
 
 def delay2():
-  fn.put(1)
-  while True:
-    a = fn.get()
-    gn.put(a)
+    fn.put(1)
+    while True:
+        a = fn.get()
+        gn.put(a)
 
 
-#SEPARACIONES-*---
+# SEPARACIONES-*---
 def split1():
-  while True:
-    a = dn.get()
-    en.put(a)
-    bn.put(a)
+    while True:
+        a = dn.get()
+        en.put(a)
+        bn.put(a)
+
 
 def split2():
-  while True:
-    a = hn.get()
-    an.put(a)
-    fn.put(a)
-#SEPARACIONES-*---
+    while True:
+        a = hn.get()
+        an.put(a)
+        fn.put(a)
 
 
+# SEPARACIONES-*---
 
-#SUMA
+# SUMA
 def add():
-  a = 0
-  c = 0
-  while True:
-    a = gn.get()
-    c = a + 1
-    hn.put(c)
+    a = 0
+    c = 0
+    while True:
+        a = gn.get()
+        c = a + 1
+        hn.put(c)
 
 
-#multiplicacion
+# multiplicacion
 def mul():
-  a = 0
-  b = 0
-  c = 0
+    a = 0
+    b = 0
+    c = 0
 
-  while True:
-    a = an.get()
-    b = bn.get()
-    c = a * b
-    cn.put(c)
-
-
-Delay1 = threading.Thread(target=delay1).start()
-Delay2 = threading.Thread(target=delay2).start()
-Split1 = threading.Thread(target=split1).start()
-Split2 = threading.Thread(target=split2).start()
+    while True:
+        a = an.get()
+        b = bn.get()
+        c = a * b
+        cn.put(c)
 
 
-Add = threading.Thread(target=add).start()
-Mul = threading.Thread(target=mul).start()
+if __name__ == "__main__":
+    an = Queue()
+    bn = Queue()
+    cn = Queue()
+    dn = Queue()
+    en = Queue()
+    fn = Queue()
+    gn = Queue()
+    hn = Queue()
 
-while True:
-  print(str(en.get()))
-  time.sleep(1)
+    Delay1 = Thread(target=delay1).start()
+    Delay2 = Thread(target=delay2).start()
+    Split1 = Thread(target=split1).start()
+    Split2 = Thread(target=split2).start()
 
+    Add = Thread(target=add).start()
+    Mul = Thread(target=mul).start()
 
-
+    while True:
+        print(str(en.get()))
+        sleep(0.1)
